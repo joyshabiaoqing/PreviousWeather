@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/git_project/Android_Cate_Server/baseframework/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="background">#F9F9F9</color>
+    <color name="background_id">#E3E3E3</color>
+    <color name="background_selected">#E8E8E8</color>
+    <color name="black">#000000</color>
+    <color name="blue">#0033FF</color>
+    <color name="dark_blue">#154b83</color>
+    <color name="dark_grey">#ff555555</color>
+    <color name="gray">#D4D4D4</color>
+    <color name="gray_1">#C0C0C0</color>
+    <color name="gray_2">#AFAFAF</color>
+    <color name="gray_e7e7e7">#E7E7E7</color>
+    <color name="green">#2EC143</color>
+    <color name="green_52d640">#52d640</color>
+    <color name="light_black">#88000000</color>
+    <color name="light_gray">#a7a7a7</color>
+    <color name="lightblack">#ff202020</color>
+    <color name="lite_green">#99FF00</color>
+    <color name="loading_dialog">#82000000</color>
+    <color name="login_hint_green">#95ba12</color>
+    <color name="login_pink">#eb3884</color>
+    <color name="login_text_green">#4e8308</color>
+    <color name="login_title_orange">#df782c</color>
+    <color name="new_button_orange">#f68a33</color>
+    <color name="new_button_save">#52d640</color>
+    <color name="new_button_save_pressed">#80e472</color>
+    <color name="new_button_submit">#f94444</color>
+    <color name="new_button_submit_pressed">#f97344</color>
+    <color name="orange">#F76809</color>
+    <color name="purple">#C211EE</color>
+    <color name="red">#ff0000</color>
+    <color name="sky_blue">#B9D3EE</color>
+    <color name="table_detail_text_green">#6aa71b</color>
+    <color name="table_detail_text_orange">#ea5300</color>
+    <color name="textcolor_black">#1a321a</color>
+    <color name="textcolor_gray">#cccccc</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent_background">#80000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="yixin_transparent">#9000</color>
+    <declare-styleable name="FlowLayout"><attr name="android:orientation"/><attr format="enum" name="layoutDirection"><enum name="ltr" value="0"/><enum name="rtl" value="1"/></attr><attr format="boolean" name="debugDraw"/><attr format="float" name="weightDefault"/><attr name="android:gravity"/></declare-styleable>
+    <declare-styleable name="FlowLayout_LayoutParams"><attr format="boolean" name="layout_newLine"/><attr format="float" name="layout_weight"/><attr name="android:layout_gravity"/></declare-styleable>
+    <!-- From: file:/C:/git_project/Android_Cate_Server/baseframework/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="Medium_TextSize">20.0dip</dimen>
+    <dimen name="Small_TextSize">15.0dip</dimen>
+    <dimen name="Tiny_TextSize">10.0dip</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="bottom_tab_font_size">10.0sp</dimen>
+    <dimen name="bottom_tab_padding_drawable">2.0dip</dimen>
+    <dimen name="bottom_tab_padding_up">5.0dip</dimen>
+    <dimen name="dp_1">1dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="dp_110">110dp</dimen>
+    <dimen name="dp_120">120dp</dimen>
+    <dimen name="dp_130">130dp</dimen>
+    <dimen name="dp_140">140dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_18">18dp</dimen>
+    <dimen name="dp_180">180dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_25">25dp</dimen>
+    <dimen name="dp_28">28dp</dimen>
+    <dimen name="dp_3">3dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="dp_300">300dp</dimen>
+    <dimen name="dp_35">35dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
+    <dimen name="dp_45">45dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_51">51dp</dimen>
+    <dimen name="dp_55">55dp</dimen>
+    <dimen name="dp_56">56dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
+    <dimen name="dp_60">60dp</dimen>
+    <dimen name="dp_65">65dp</dimen>
+    <dimen name="dp_7">7dp</dimen>
+    <dimen name="dp_70">70dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_80">80dp</dimen>
+    <dimen name="dp_line">0.5dp</dimen>
+    <dimen name="emotion_item_view_height">13.299988dip</dimen>
+    <dimen name="key_height">70.0dip</dimen>
+    <dimen name="large_padding_length">20.0dip</dimen>
+    <dimen name="new_blog_size">70.0dip</dimen>
+    <dimen name="no_result_padding_length">50.0dip</dimen>
+    <dimen name="normal_padding_length">10.0dip</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="sp_16">16px</dimen>
+    <dimen name="sp_18">18px</dimen>
+    <dimen name="sp_20">20px</dimen>
+    <dimen name="sp_22">22px</dimen>
+    <dimen name="sp_24">24sp</dimen>
+    <dimen name="sp_26">26sp</dimen>
+    <dimen name="sp_30">30sp</dimen>
+    <dimen name="splash_test_center_margin_right">0.0dip</dimen>
+    <dimen name="splash_test_top_margin_top">20.0dip</dimen>
+    <dimen name="sta_height">48.0dip</dimen>
+    <dimen name="switch_logo_bottom_padding">30.0sp</dimen>
+    <dimen name="title_height">74.0dip</dimen>
+    <dimen name="title_text_size">20.0sp</dimen>
+    <dimen name="widget_content_margin_left">10.0dip</dimen>
+    <dimen name="widget_content_margin_top">20.0dip</dimen>
+    <dimen name="widget_height">100.0dip</dimen>
+    <dimen name="widget_logo_size">35.0dip</dimen>
+    <dimen name="widget_write_margin_left">10.0dip</dimen>
+    <dimen name="widget_write_margin_top">19.0dip</dimen>
+    <!-- From: file:/C:/git_project/Android_Cate_Server/baseframework/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">BaseFramework</string>
+    <string name="cancel">取消</string>
+    <string name="date_local">CHINA</string>
+    <string name="exit">退出</string>
+    <string name="folder_crash">/sdcard/crash/</string>
+    <string name="please_choose">请选择操作：</string>
+    <string name="prompt">提示</string>
+    <string name="server_connecting">正在尝试连接服务器，请稍等</string>
+    <string name="server_information">正在获取服务器信息，请稍等</string>
+    <string name="submit">确定</string>
+    <!-- From: file:/C:/git_project/Android_Cate_Server/baseframework/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="button_white_green_3" parent="text_size_3">
+        <item name="android:textColor">@drawable/selector_textcolor_green_white</item>
+        <item name="android:background">@drawable/selector_button_green_corners</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+    <style name="keyboard_button_1">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">@dimen/dp_3</item>
+        <item name="android:textColor">@drawable/selector_button_keyboard_textcolor</item>
+        <item name="android:textSize">29sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/selector_button_keyboard_background</item>
+    </style>
+    <style name="keyboard_button_2" parent="text_size_3">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@drawable/selector_button_keyboard_textcolor</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/selector_button_keyboard_background</item>
+    </style>
+    <style name="loading_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    <style name="text_size_1">
+        <item name="android:textSize">25px</item>
+    </style>
+    <style name="text_size_2">
+        <item name="android:textSize">22px</item>
+    </style>
+    <style name="text_size_3">
+        <item name="android:textSize">20px</item>
+    </style>
+    <style name="text_size_4">
+        <item name="android:textSize">16px</item>
+    </style>
+    <style name="text_size_5">
+        <item name="android:textSize">14px</item>
+    </style>
+    <style name="text_style_black_1" parent="text_size_1">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="text_style_black_2" parent="text_size_2">
+        <item name="android:textColor">@color/textcolor_black</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="text_style_black_3" parent="text_size_3">
+        <item name="android:textColor">@color/textcolor_black</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="text_style_black_4" parent="text_size_4">
+        <item name="android:textColor">@color/textcolor_black</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="text_style_black_5" parent="text_size_5">
+        <item name="android:textColor">@color/textcolor_black</item>
+        <item name="android:gravity">start</item>
+    </style>
+</resources>
