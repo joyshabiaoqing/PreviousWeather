@@ -1,29 +1,25 @@
 package com.biao.previousweather.Presenter;
 
-import android.app.Fragment;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.Serializable;
+import com.biao.previousweather.FrameApplication;
 
 import info.mixun.baseframework.annotations.FrameSaveRestoreHolder;
-import info.mixun.baseframework.control.FrameApplication;
-import info.mixun.baseframework.control.activity.FrameActivity;
-import info.mixun.baseframework.control.handler.FrameHandler;
+
 
 /**
  * Created by Administrator on 2016/7/5.
  */
 public abstract class FrameFragment extends Fragment {
     public static final int REFRESH_FRAGMENT = 0;
-    private FrameActivity frameActivity = null;
-    private FrameHandler<? extends FrameFragment> handler;
-    private Class<? extends FrameFragment> lastFragment = null;
-    private Class<? extends FrameFragment> currentChildClass = null;
+    private FrameActivity frameActivity;
+    private Class<? extends FrameFragment> lastFragment;
+    private Class<? extends FrameFragment> currentChildClass;
     private int sonViewId;
     private boolean isDestroy = true;
 
@@ -101,28 +97,6 @@ public abstract class FrameFragment extends Fragment {
 
     public abstract boolean onBackPressed();
 
-    public void refresh(int i) {
-        if(this.getHandler() != null) {
-            this.handler.sendMessage(this.getHandler().obtainMessage(i));
-        }
-
-    }
-
-    public void refresh(int i, Serializable data) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("data", data);
-        this.refresh(i, bundle);
-    }
-
-    public void refresh(int i, Bundle bundle) {
-        if(this.getHandler() != null) {
-            Message msg = this.getHandler().obtainMessage(i);
-            msg.setData(bundle);
-            this.handler.sendMessage(msg);
-        }
-
-    }
-
 
     public FrameActivity getFrameActivity() {
         return this.frameActivity;
@@ -136,13 +110,7 @@ public abstract class FrameFragment extends Fragment {
         return (FrameApplication)this.getActivity().getApplication();
     }
 
-    public FrameHandler<? extends FrameFragment> getHandler() {
-        return this.handler;
-    }
 
-    public void setHandler(FrameHandler<? extends FrameFragment> handler) {
-        this.handler = handler;
-    }
 
     public Class<? extends FrameFragment> getLastFragment() {
         return this.lastFragment;
@@ -157,7 +125,4 @@ public abstract class FrameFragment extends Fragment {
     }
 
 
-    public void setSonViewId(int sonViewId) {
-        this.sonViewId = sonViewId;
-    }
 }
