@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NavigationBar">
+        <attr name="navigation_color" format="color" />
+        <attr name="navigation_text_size" format="dimension" />
+        <attr name="navigation_text" format="string" />
+        <attr name="navigation_icon" format="reference" />
+    </declare-styleable>
+</resources>
