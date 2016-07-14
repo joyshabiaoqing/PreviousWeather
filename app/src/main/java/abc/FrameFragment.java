@@ -1,4 +1,4 @@
-package com.biao.previousweather.Presenter;
+package abc;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,10 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.biao.previousweather.FrameApplication;
-
-import info.mixun.baseframework.annotations.FrameSaveRestoreHolder;
 
 
 /**
@@ -54,19 +50,19 @@ public abstract class FrameFragment extends Fragment {
         super.onHiddenChanged(hidden);
     }
 
-    public void onSaveInstanceState(Bundle outState) {
-        FrameSaveRestoreHolder.saveInstance(outState, this);
-        super.onSaveInstanceState(outState);
-    }
+//    public void onSaveInstanceState(Bundle outState) {
+//        FrameSaveRestoreHolder.saveInstance(outState, this);
+//        super.onSaveInstanceState(outState);
+//    }
 
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        if(savedInstanceState != null) {
-            this.isDestroy = true;
-            FrameSaveRestoreHolder.restoreInstance(savedInstanceState, this);
-        }
-
-        super.onViewStateRestored(savedInstanceState);
-    }
+//    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+//        if(savedInstanceState != null) {
+//            this.isDestroy = true;
+//            FrameSaveRestoreHolder.restoreInstance(savedInstanceState, this);
+//        }
+//
+//        super.onViewStateRestored(savedInstanceState);
+//    }
 
     public void onResume() {
         if(this.isDestroy) {

@@ -1,4 +1,4 @@
-package com.biao.previousweather.View;
+package com.biao.previousweather.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -58,11 +59,11 @@ public class NavigationBar extends View {
     }
 
     public NavigationBar(Context context) {
-        super(context, null);
+        this(context, null);
     }
 
     public NavigationBar(Context context, AttributeSet attrs) {
-        super(context, attrs, 0);
+        this(context, attrs, 0);
     }
 
     public NavigationBar(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -116,6 +117,9 @@ public class NavigationBar extends View {
 //        }
         int iconWidth = Math.min(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), (getMeasuredHeight() - getPaddingTop() - getPaddingBottom()) / 2);
         int left = (getMeasuredWidth() - iconWidth) / 2;
+        if (mTextBound == null) {
+            Log.e("aa", "kong");
+        }
         int top = (getMeasuredHeight() - mTextBound.height() - iconWidth - mTextBound.height() / 4) / 2;
         mIconRect.set(left, top, left + iconWidth, top + iconWidth);
     }

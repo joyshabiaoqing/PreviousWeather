@@ -1,4 +1,4 @@
-package com.biao.previousweather.Presenter;
+package abc;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.os.PersistableBundle;
 import android.support.annotation.AnimRes;
 import android.support.v4.app.FragmentActivity;
 
-import com.biao.previousweather.FrameApplication;
 import com.biao.previousweather.R;
 
 /**

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda' //加上这句加,入plugin声明
 
 android {
@@ -34,4 +35,7 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     compile files('src/main/jniLibs/fragment.jar')
     compile project(':baseframework')
+    compile 'com.jakewharton:butterknife:8.0.1'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'io.reactivex:rxjava:1.1.0'
 }
