@@ -34,7 +34,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <ImageView
-                    android:id="@+id/image"
+                    android:id="@+id/image_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
@@ -65,13 +65,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:src="@drawable/ic_favorite_24dp"
-            app:borderWidth="0dp"
             app:layout_anchor="@id/main_content"
             app:layout_anchorGravity="end|bottom" />
+
     </android.support.design.widget.CoordinatorLayout>
 
-    <com.biao.previousweather.view.NavigationBar
-        android:id="@+id/navigation"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/right"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

@@ -9,16 +9,6 @@ import android.view.animation.AnimationUtils;
 
 import com.biao.previousweather.R;
 
-/**
- * Created by bruce on 2016-04-30.
- * Project: newsnow
- */
-
-/**
- * Thanks for drakeet/Meizhi
- * <p>
- * https://github.com/drakeet/Meizhi/blob/master/app%2Fsrc%2Fmain%2Fjava%2Fme%2Fdrakeet%2Fmeizhi%2Fui%2Fadapter%2FAnimRecyclerViewAdapter.java
- */
 public class AnimRecyclerViewAdapter<T extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<T> {
 

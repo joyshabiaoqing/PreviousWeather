@@ -65,13 +65,13 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
         switch (viewType) {
             case TYPE_ONE:
                 return new NowWeatherViewHolder(
-                    LayoutInflater.from(mContext).inflate(R.layout.item_temperature, parent, false));
+                        LayoutInflater.from(mContext).inflate(R.layout.item_temperature, parent, false));
             case TYPE_TWO:
                 return new HoursWeatherViewHolder(
-                    LayoutInflater.from(mContext).inflate(R.layout.item_hour_info, parent, false));
+                        LayoutInflater.from(mContext).inflate(R.layout.item_hour_info, parent, false));
             case TYPE_THREE:
                 return new SuggestionViewHolder(
-                    LayoutInflater.from(mContext).inflate(R.layout.item_suggestion, parent, false));
+                        LayoutInflater.from(mContext).inflate(R.layout.item_suggestion, parent, false));
             case TYPE_FORE:
                 return new ForecastViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_forecast, parent, false));
         }
@@ -134,13 +134,13 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
             try {
                 tempFlu.setText(String.format("%s℃", weather.now.tmp));
                 tempMax.setText(
-                    String.format("↑ %s °", weather.dailyForecast.get(0).tmp.max));
+                        String.format("↑ %s °", weather.dailyForecast.get(0).tmp.max));
                 tempMin.setText(
-                    String.format("↓ %s °", weather.dailyForecast.get(0).tmp.min));
+                        String.format("↓ %s °", weather.dailyForecast.get(0).tmp.min));
                 tempPm.setText(Util.safeText("PM25： ", weather.aqi.city.pm25));
                 tempQuality.setText(Util.safeText("空气质量： ", weather.aqi.city.qlty));
                 ImageLoader.load(context, mSetting.getInt(weather.now.cond.txt, R.mipmap.none),
-                    weatherIcon);
+                        weatherIcon);
             } catch (Exception e) {
                 PLog.e(TAG, e.toString());
             }
@@ -185,14 +185,14 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
                     //第一个参数是开始截取的位置，第二个是结束位置。
                     String mDate = weather.hourlyForecast.get(i).date;
                     mClock[i].setText(
-                        mDate.substring(mDate.length() - 5, mDate.length()));
+                            mDate.substring(mDate.length() - 5, mDate.length()));
                     mTemp[i].setText(
-                        String.format("%s°", weather.hourlyForecast.get(i).tmp));
+                            String.format("%s°", weather.hourlyForecast.get(i).tmp));
                     mHumidity[i].setText(
-                        String.format("%s%%", weather.hourlyForecast.get(i).hum)
+                            String.format("%s%%", weather.hourlyForecast.get(i).hum)
                     );
                     mWind[i].setText(
-                        String.format("%sKm", weather.hourlyForecast.get(i).wind.spd)
+                            String.format("%sKm", weather.hourlyForecast.get(i).wind.spd)
                     );
                 }
             } catch (Exception e) {
@@ -280,25 +280,25 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
                     if (i > 1) {
                         try {
                             forecastDate[i].setText(
-                                Util.dayForWeek(weather.dailyForecast.get(i).date));
+                                    Util.dayForWeek(weather.dailyForecast.get(i).date));
                         } catch (Exception e) {
                             PLog.e(e.toString());
                         }
                     }
                     ImageLoader.load(mContext, mSetting.getInt(weather.dailyForecast.get(i).cond.txtD, R.mipmap.none),
-                        forecastIcon[i]);
+                            forecastIcon[i]);
                     forecastTemp[i].setText(
-                        String.format("%s° %s°",
-                            weather.dailyForecast.get(i).tmp.min,
-                            weather.dailyForecast.get(i).tmp.max));
+                            String.format("%s° %s°",
+                                    weather.dailyForecast.get(i).tmp.min,
+                                    weather.dailyForecast.get(i).tmp.max));
                     forecastTxt[i].setText(
-                        String.format("%s。 最高%s℃。 %s %s %s km/h。 降水几率 %s%%。",
-                            weather.dailyForecast.get(i).cond.txtD,
-                            weather.dailyForecast.get(i).tmp.max,
-                            weather.dailyForecast.get(i).wind.sc,
-                            weather.dailyForecast.get(i).wind.dir,
-                            weather.dailyForecast.get(i).wind.spd,
-                            weather.dailyForecast.get(i).pop));
+                            String.format("%s。 最高%s℃。 %s %s %s km/h。 降水几率 %s%%。",
+                                    weather.dailyForecast.get(i).cond.txtD,
+                                    weather.dailyForecast.get(i).tmp.max,
+                                    weather.dailyForecast.get(i).wind.sc,
+                                    weather.dailyForecast.get(i).wind.dir,
+                                    weather.dailyForecast.get(i).wind.spd,
+                                    weather.dailyForecast.get(i).pop));
                 }
             } catch (Exception e) {
                 PLog.e(e.toString());

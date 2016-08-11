@@ -49,24 +49,24 @@ public class RetrofitSingleton {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         okHttpClient = new OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .retryOnConnectionFailure(true)
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .build();
+                .addInterceptor(interceptor)
+                .retryOnConnectionFailure(true)
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .build();
     }
 
     private static void initRetrofit() {
         retrofit = new Retrofit.Builder()
-            .baseUrl(APIService.HOST)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .build();
+                .baseUrl(APIService.HOST)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
     }
 
     public static void disposeFailureInfo(Throwable t, Context context, View view) {
         if (t.toString().contains("GaiException") || t.toString().contains("SocketTimeoutException") ||
-            t.toString().contains("UnknownHostException")) {
+                t.toString().contains("UnknownHostException")) {
             Snackbar.make(view, "网络不好,~( ´•︵•` )~", Snackbar.LENGTH_LONG).show();
         } else {
             Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
@@ -75,16 +75,27 @@ public class RetrofitSingleton {
     }
 
     public Observable<Weather> fetchWeather(String city) {
+//        return apiService.mWeatherAPI(city, C.KEY)
+//                //.filter(weatherAPI -> weatherAPI.mHeWeatherDataService30s.get(0).status.equals("ok"))
+//                .flatMap(weatherAPI -> {
+//                    if (weatherAPI.mHeWeatherDataService30s.get(0).status.equals("no more requests")) {
+//                        return Observable.error(new RuntimeException("/(ㄒoㄒ)/~~,API免费次数已用完"));
+//                    }
+//                    return Observable.just(weatherAPI);
+//                })
+//                .map(weatherAPI -> weatherAPI.mHeWeatherDataService30s.get(0))
+//                .compose(RxUtils.rxSchedulerHelper());
+
         return apiService.mWeatherAPI(city, C.KEY)
-            //.filter(weatherAPI -> weatherAPI.mHeWeatherDataService30s.get(0).status.equals("ok"))
-            .flatMap(weatherAPI -> {
-                if (weatherAPI.mHeWeatherDataService30s.get(0).status.equals("no more requests")) {
-                    return Observable.error(new RuntimeException("/(ㄒoㄒ)/~~,API免费次数已用完"));
-                }
-                return Observable.just(weatherAPI);
-            })
-            .map(weatherAPI -> weatherAPI.mHeWeatherDataService30s.get(0))
-            .compose(RxUtils.rxSchedulerHelper());
+                .flatMap(weatherAPI -> {
+                    if (weatherAPI.mHeWeatherDataService30s.get(0).status.equals("no more requests")) {
+                        return Observable.error(new RuntimeException("api免费次数已经用完"));
+                    } else {
+                        return Observable.just(weatherAPI);
+                    }
+                })
+                .map(weatherAPI -> weatherAPI.mHeWeatherDataService30s.get(0))
+                .compose(RxUtils.rxSchedulerHelper());
     }
 
     public Observable<VersionAPI> fetchVersion() {

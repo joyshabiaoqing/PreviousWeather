@@ -12,12 +12,14 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -26,24 +28,26 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.biao.previousweather.R;
 import com.biao.previousweather.controls.adapter.WeatherAdapter;
 import com.biao.previousweather.controls.component.RetrofitSingleton;
 import com.biao.previousweather.controls.listener.HidingScrollListener;
 import com.biao.previousweather.controls.utils.PLog;
 import com.biao.previousweather.controls.utils.Util;
+import com.biao.previousweather.modules.Setting;
 import com.biao.previousweather.modules.Weather;
 
 import rx.Observable;
 import rx.Observer;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Created by Administrator on 2016/8/2.
  */
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, AMapLocationListener {
 
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
@@ -51,7 +55,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private DrawerLayout drawer;
     private FloatingActionButton fab;
     private SwipeRefreshLayout mRefreshLayout;
-    private ImageView bannner;
+    private ImageView banner;
     private ProgressBar mProgressBar;
     private ImageView mErroImageView;
     private RelativeLayout headerBackground;
@@ -61,22 +65,32 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Weather mWeather = new Weather();
     private WeatherAdapter mAdapter;
 
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    public AMapLocationClientOption mLocationOption = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity2);
     }
 
     @Override
     protected void initialize() {
+        setContentView(R.layout.main_activity2);
+        setStatusBarColor(R.color.colorSunset);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+//        setStatusBarColorForKitkat(R.color.colorSunset);
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         if (appBarLayout != null) {
             //控制是否展开
             appBarLayout.setExpanded(false);
         }
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorSunset));
+        //有什么用
         setSupportActionBar(toolbar);
-        bannner = (ImageView) findViewById(R.id.banner);
+        banner = (ImageView) findViewById(R.id.image_view);
+
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         if (mProgressBar != null) {
             mProgressBar.setVisibility(View.VISIBLE);
@@ -86,13 +100,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mErroImageView);
         //Glide.with(this).load(R.raw.loading).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageViewTarget);
         mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        if (mRefreshLayout != null) {
-            mRefreshLayout.setOnRefreshListener(() ->
-                    mRefreshLayout.postDelayed(this::load, 1000));
-        }
 
         //标题
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, R.color.colorSunset));
         if (collapsingToolbarLayout != null) {
             collapsingToolbarLayout.setTitle(" ");
         }
@@ -100,46 +111,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         initIcon();
 
         //初始化抽屉
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.right);
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
             View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
             headerBackground = (RelativeLayout) headerLayout.findViewById(R.id.header_background);
-            drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer = (DrawerLayout) findViewById(R.id.drawer);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
                     R.string.navigation_drawer_close);
             drawer.addDrawerListener(toggle);
             toggle.syncState();
         }
 
+        //recylerview
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setHasFixedSize(true);
 
-        //fab
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (fab != null) {
-//            fab.setOnClickListener(v -> showFabDialog());
-            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-            final int fabBottomMargin = lp.bottomMargin;
-
-            //recclerview
-            mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-            mRecyclerView.setHasFixedSize(true);
-            mRecyclerView.addOnScrollListener(new HidingScrollListener() {
-                @Override
-                public void onHide() {
-                    fab.animate()
-                            .translationY(fab.getHeight() + fabBottomMargin)
-                            .setInterpolator(new AccelerateInterpolator(2))
-                            .start();
-                }
-
-                @Override
-                public void onShow() {
-                    fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-                }
-            });
-            mAdapter = new WeatherAdapter(MainActivity.this, mWeather);
-            mRecyclerView.setAdapter(mAdapter);
+        mAdapter = new WeatherAdapter(MainActivity.this, mWeather);
+        mRecyclerView.setAdapter(mAdapter);
 
 //            mAdapter.setOnItemClickListener(mWeather1 -> {
 //                LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -183,17 +173,54 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //
 //                alertDialog.show();
 //            });
-        }
     }
 
     @Override
     protected void initControls() {
 
+        if (fab != null) {
+            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+            final int fabBottomMargin = lp.bottomMargin;
+//        fab.setOnClickListener(v -> showFabDialog());
+            mRecyclerView.addOnScrollListener(new HidingScrollListener() {
+                @Override
+                public void onHide() {
+                    fab.animate()
+                            .translationY(fab.getHeight() + fabBottomMargin)
+                            .setInterpolator(new AccelerateInterpolator(2))
+                            .start();
+                }
+
+                @Override
+                public void onShow() {
+                    fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+                }
+            });
+        }
+
+
+        if (mRefreshLayout != null) {
+            mRefreshLayout.setOnRefreshListener(() ->
+                    mRefreshLayout.postDelayed(this::load, 1000));
+//            mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//                @Override
+//                public void onRefresh() {
+//                    mRefreshLayout.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            load();
+//                        }
+//                    },1000);
+//                }
+//            });
+        }
     }
 
     @Override
     protected void initData() {
-
+        banner.setImageDrawable(getResources().getDrawable(R.mipmap.sunset));
+        initDataObserver();
+        location();
     }
 
     @Override
@@ -206,52 +233,50 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 优先网络
      */
     private void load() {
-
-        compositeSubscription.add(Observable.concat(fetchDataByNetWork(), fetchDataByCache())
-                .first(new Func1<Weather, Boolean>() {
-                    @Override
-                    public Boolean call(Weather weather) {
-                        return weather != null;
-                    }
-                })
-                .doOnError(new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-
-                    }
-                })
-                .doOnNext(new Action1<Weather>() {
-                    @Override
-                    public void call(Weather weather) {
-
-                    }
-                })
-                .doOnTerminate(new Action0() {
-                    @Override
-                    public void call() {
-
-                    }
-                })
-                .subscribe(observer)
-        );
-
-//        compositeSubscription.add(
-//                Observable.concat(fetchDataByNetWork(), fetchDataByCache())
-//                        .first(weather -> weather != null)
-//                        .doOnError(throwable -> {
-//                            mErroImageView.setVisibility(View.VISIBLE);
-//                            mRecyclerView.setVisibility(View.GONE);
-//                        })
-//                        .doOnNext(weather -> {
-//                            mErroImageView.setVisibility(View.GONE);
-//                            mRecyclerView.setVisibility(View.VISIBLE);
-//                        })
-//                        .doOnTerminate(() -> {
-//                            mRefreshLayout.setRefreshing(false);
-//                            mProgressBar.setVisibility(View.GONE);
-//                        })
-//                        .subscribe(observer)
+//        compositeSubscription.add(Observable.concat(fetchDataByNetWork(), fetchDataByCache())
+//                .first(new Func1<Weather, Boolean>() {
+//                    @Override
+//                    public Boolean call(Weather weather) {
+//                        return weather != null;
+//                    }
+//                })
+//                .doOnError(new Action1<Throwable>() {
+//                    @Override
+//                    public void call(Throwable throwable) {
+//
+//                    }
+//                })
+//                .doOnNext(new Action1<Weather>() {
+//                    @Override
+//                    public void call(Weather weather) {
+//
+//                    }
+//                })
+//                .doOnTerminate(new Action0() {
+//                    @Override
+//                    public void call() {
+//
+//                    }
+//                })
+//                .subscribe(observer)
 //        );
+        compositeSubscription.add(
+                Observable.concat(fetchDataByNetWork(), fetchDataByCache())
+                        .first(weather -> weather != null)
+                        .doOnError(throwable -> {
+                            mErroImageView.setVisibility(View.VISIBLE);
+                            mRecyclerView.setVisibility(View.GONE);
+                        })
+                        .doOnNext(weather -> {
+                            mErroImageView.setVisibility(View.GONE);
+                            mRecyclerView.setVisibility(View.VISIBLE);
+                        })
+                        .doOnTerminate(() -> {
+                            mRefreshLayout.setRefreshing(false);
+                            mProgressBar.setVisibility(View.GONE);
+                        })
+                        .subscribe(observer)
+        );
     }
 
     /**
@@ -284,12 +309,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 拿到数据后的操作
      */
     private void initDataObserver() {
-
         observer = new Observer<Weather>() {
-
             @Override
             public void onCompleted() {
-
             }
 
             @Override
@@ -308,6 +330,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                    aCache.put(C.WEATHER_CACHE, weather,
 //                            (mSetting.getAutoUpdate() * Setting.ONE_HOUR));//默认3小时后缓存失效
 //                }
+                Log.e("c", "c");
                 mWeather.status = weather.status;
                 mWeather.aqi = weather.aqi;
                 mWeather.basic = weather.basic;
@@ -320,11 +343,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 //mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
                 normalStyleNotification(mWeather);
-                showSnackbar(fab, "加载完毕，✺◟(∗❛ัᴗ❛ั∗)◞✺,");
+//                showSnackbar(fab, "加载完毕，✺◟(∗❛ัᴗ❛ั∗)◞✺,");
             }
         };
     }
 
+    //通知
     private void normalStyleNotification(Weather weather) {
         Intent intent = new Intent(MainActivity.this, MainActivity.class);
         //intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -376,6 +400,51 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             mSetting.putInt("霾", R.mipmap.type_two_haze);
             mSetting.putInt("雾", R.mipmap.type_two_fog);
             mSetting.putInt("雨夹雪", R.mipmap.type_two_snowrain);
+        }
+    }
+
+    /**
+     * 高德定位
+     */
+    private void location() {
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(this);
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        //设置是否只定位一次,默认为false
+        mLocationOption.setOnceLocation(false);
+        //设置是否强制刷新WIFI，默认为强制刷新
+        mLocationOption.setWifiActiveScan(true);
+        //设置是否允许模拟位置,默认为false，不允许模拟位置
+        mLocationOption.setMockEnable(false);
+        //设置定位间隔 单位毫秒
+//        int tempTime = mSetting.getAutoUpdate();
+//        if (tempTime == 0) {
+//            tempTime = 100;
+//        }
+        mLocationOption.setInterval(100 * Setting.ONE_HOUR);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation != null) {
+            if (aMapLocation.getErrorCode() == 0) {
+                //定位成功回调信息，设置相关消息
+                aMapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
+                mSetting.setCityName(aMapLocation.getCity());
+            } else {
+                showSnackbar(fab, "定位失败,加载默认城市");
+            }
+            load();
         }
     }
 

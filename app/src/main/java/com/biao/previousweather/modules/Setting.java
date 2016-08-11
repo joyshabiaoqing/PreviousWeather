@@ -92,7 +92,7 @@ public class Setting {
         mPrefs.edit().putString(CITY_NAME, name).apply();
     }
 
-    public String getCityName() {return mPrefs.getString(CITY_NAME, "北京");}
+    public String getCityName() {return mPrefs.getString(CITY_NAME, "珠海");}
 
     //  通知栏模式 默认为常驻
     public void setNotificationModel(int t) {

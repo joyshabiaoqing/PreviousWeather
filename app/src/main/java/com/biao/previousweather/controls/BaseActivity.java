@@ -42,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
@@ -49,8 +50,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        this.initData();
         super.onResume();
+        this.initData();
     }
 
     /**

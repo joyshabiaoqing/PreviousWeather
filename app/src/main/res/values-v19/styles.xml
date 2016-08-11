@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme"
-        parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -10,8 +9,7 @@
 
     </style>
 
-    <style name="AppTheme.transpant"
-        parent="AppTheme">
+    <style name="AppTheme.transpant" parent="AppTheme">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
