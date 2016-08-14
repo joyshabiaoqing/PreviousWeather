@@ -4,7 +4,7 @@ apply plugin: 'me.tatarka.retrolambda' //加上这句加,入plugin声明
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.biao.previousweather"
@@ -12,7 +12,30 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+//        ndk {
+//            moduleName = "hello-jni"
+//            abiFilters "armeabi", "armeabi-v7a"
+            /*
+                 * Other ndk flags configurable here are
+                 * cppFlags.add("-fno-rtti")
+                 * cppFlags.add("-fno-exceptions")
+                 * ldLibs.addAll(["android", "log"])
+                 * stl       = "system"
+                 */
+//        }
     }
+
+    //更换jniLibs目录
+//    sourceSets.main {
+//        // 你的.so库的实际路径
+//        jniLibs.srcDir 'src/main/libs'
+//    }
+    //更换jni源码目录
+//    sourceSets.main {
+//        // 你的源码目录
+//        jni.srcDir 'src/main/otherDir'
+//    }
     buildTypes {
         release {
             minifyEnabled false
@@ -25,6 +48,8 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
