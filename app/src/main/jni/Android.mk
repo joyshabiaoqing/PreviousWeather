@@ -31,23 +31,23 @@ LOCAL_SRC_FILES:= \
   android_net_ethernet.cpp
 
 # All of the shared libraries we link against.
-#LOCAL_SHARED_LIBRARIES := \
-	#libutils \
-   	#libnetutils
+LOCAL_SHARED_LIBRARIES := \
+	libutils \
+   	libnetutils
 
 # No static libraries.
-#LOCAL_STATIC_LIBRARIES :=
+LOCAL_STATIC_LIBRARIES :=
 
 # Also need the JNI headers.
-#LOCAL_C_INCLUDES += \
-	#$(JNI_H_INCLUDE)
+LOCAL_C_INCLUDES += \
+	$(JNI_H_INCLUDE)
 
 # No special compiler flags.
-#LOCAL_CFLAGS +=
+LOCAL_CFLAGS +=
 
 LOCAL_STATIC_LIBRARIES +=  libstlport
 
-LOCAL_C_INCLUDES += external/stlport/stlport 
+LOCAL_C_INCLUDES += external/stlport/stlport
 LOCAL_C_INCLUDES += bionic
 
 # Don't prelink this library.  For more efficient code, you may want
