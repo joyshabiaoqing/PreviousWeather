@@ -76,20 +76,33 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void initialize() {
-        setContentView(R.layout.main_activity2);
-        setStatusBarColor(R.color.colorSunset);
+
+        setContentView(R.layout.main_activity);
+        //设置状态栏颜色，顶部背景颜色
         fab = (FloatingActionButton) findViewById(R.id.fab);
-//        setStatusBarColorForKitkat(R.color.colorSunset);
+        setStatusBarColor(R.color.colorSunset);
+        //appbar就是平时用到的actionbar
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
-        if (appBarLayout != null) {
-            //控制是否展开
-            appBarLayout.setExpanded(false);
+        //控制是否展开
+        appBarLayout.setExpanded(false);
+//        setStatusBarColorForKitkat(R.color.colorSunset);
+//        appBarLayout.setExpanded(true);
+
+        //可以伸缩的标题栏，既可伸缩的actionbar,可以设置标题
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        //设置actionbar的背景颜色
+        collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, R.color.colorSunset));
+        if (collapsingToolbarLayout != null) {
+            collapsingToolbarLayout.setTitle("");
         }
+        //标题栏中可伸缩的图片
+        banner = (ImageView) findViewById(R.id.image_view);
+        //真正的actionbar,toolbar代替原来的actionbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.colorSunset));
         //有什么用
+        //把toolbar设置为界面的actionbar
         setSupportActionBar(toolbar);
-        banner = (ImageView) findViewById(R.id.image_view);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         if (mProgressBar != null) {
@@ -101,12 +114,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //Glide.with(this).load(R.raw.loading).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageViewTarget);
         mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
 
-        //标题
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, R.color.colorSunset));
-        if (collapsingToolbarLayout != null) {
-            collapsingToolbarLayout.setTitle(" ");
-        }
 
         initIcon();
 
@@ -116,7 +123,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             navigationView.setNavigationItemSelectedListener(this);
             View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
             headerBackground = (RelativeLayout) headerLayout.findViewById(R.id.header_background);
-            drawer = (DrawerLayout) findViewById(R.id.drawer);
+            drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
                     R.string.navigation_drawer_close);
             drawer.addDrawerListener(toggle);
@@ -181,7 +188,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (fab != null) {
             CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
             final int fabBottomMargin = lp.bottomMargin;
-//        fab.setOnClickListener(v -> showFabDialog());
+            fab.setOnClickListener(v -> {
+//            showSnackbar(drawer,"hello world");
+            });
             mRecyclerView.addOnScrollListener(new HidingScrollListener() {
                 @Override
                 public void onHide() {

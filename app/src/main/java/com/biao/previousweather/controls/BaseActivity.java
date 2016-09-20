@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,6 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity {
          * 也是为了在低版本的android系统中兼容toolbar。
          */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Log.e("==>", Build.VERSION_CODES.KITKAT + "");
             Window window = getWindow();
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -56,7 +58,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 设置状态栏颜色
-     * 也就是所谓沉浸式状态栏
+     * 也就是所谓沉浸式状态栏（其实不是沉浸式）
+     * 这个效果其实就是让背景图片可以利用系统状态栏的空间，从而能够让背景图和状态栏融为一体。
+     * 沉浸式就是要给用户提供完全沉浸的体验，使用户有一种置身于虚拟世界之中的感觉。
      */
     public void setStatusBarColor(int color) {
         /**

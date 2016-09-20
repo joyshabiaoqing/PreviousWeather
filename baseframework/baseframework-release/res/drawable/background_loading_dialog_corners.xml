@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <solid android:color="@color/loading_dialog" />
-    <corners android:radius="@dimen/dp_8" />
-</shape>
-
-<!-- From: file:/C:/git_project/Android_Cate_Server/baseframework/src/main/res/drawable/background_loading_dialog_corners.xml -->
