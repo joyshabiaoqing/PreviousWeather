@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/main_activity">
-
+//app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    //使界面变得更加美观
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="wrap_content"

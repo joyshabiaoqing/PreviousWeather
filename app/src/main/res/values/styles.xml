@@ -1,36 +1,12 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorSunset</item>
         <item name="colorPrimaryDark">@color/colorSunset</item>
+        <!--<item name="colorPrimary">#314562</item>-->
+        <!--<item name="colorPrimaryDark">#658412</item>-->
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
     </style>
-
-    <!-- Base application theme. -->
-    <!--<style name="AppTheme" parent="Base.AppTheme">-->
-    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-    <!--</style>-->
-
-    <!--<style name="Base.AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-    <!--<item name="android:colorPrimary">@color/primary</item>-->
-    <!--<item name="android:colorPrimaryDark">@color/primary_dark</item>-->
-    <!--<item name="android:colorAccent">@color/accent</item>-->
-    <!--</style>-->
-
-    <!--<style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar">-->
-    <!--<item name="android:windowBackground">@mipmap/launcher</item>-->
-    <!--<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>-->
-    <!--</style>-->
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 </resources>

@@ -12,7 +12,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -80,6 +79,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setContentView(R.layout.main_activity);
         //设置状态栏颜色，顶部背景颜色
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        setTitle("");
         setStatusBarColor(R.color.colorSunset);
         //appbar就是平时用到的actionbar
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
@@ -91,15 +91,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //可以伸缩的标题栏，既可伸缩的actionbar,可以设置标题
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         //设置actionbar的背景颜色
-        collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, R.color.colorSunset));
         if (collapsingToolbarLayout != null) {
+//            collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, R.color.colorSunset));
             collapsingToolbarLayout.setTitle("");
         }
         //标题栏中可伸缩的图片
         banner = (ImageView) findViewById(R.id.image_view);
         //真正的actionbar,toolbar代替原来的actionbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.colorSunset));
+        //这个不要设置背景颜色，伸缩的图片会被放在toolbar下面，不美观，设置collapsinglayout背景颜色就好，效果一样
+//        toolbar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         //有什么用
         //把toolbar设置为界面的actionbar
         setSupportActionBar(toolbar);
@@ -189,8 +190,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
             final int fabBottomMargin = lp.bottomMargin;
             fab.setOnClickListener(v -> {
-//            showSnackbar(drawer,"hello world");
+                showSnackbar(collapsingToolbarLayout, "hello world");
             });
+
             mRecyclerView.addOnScrollListener(new HidingScrollListener() {
                 @Override
                 public void onHide() {
@@ -415,8 +417,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     /**
      * 高德定位
      */
-    private void location() {
         //初始化定位
+    private void location() {
         mLocationClient = new AMapLocationClient(getApplicationContext());
         //设置定位回调监听
         mLocationClient.setLocationListener(this);
