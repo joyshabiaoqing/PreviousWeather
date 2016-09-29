@@ -8,13 +8,6 @@ import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by HugoXie on 16/5/19.
- *
- * Email: Hugo3641@gamil.com
- * GitHub: https://github.com/xcc3641
- * Info: 封装 Rx 的一些方法
- */
 public class RxUtils {
 
     public static <T> Observable.Transformer<T, T> rxSchedulerHelper() {

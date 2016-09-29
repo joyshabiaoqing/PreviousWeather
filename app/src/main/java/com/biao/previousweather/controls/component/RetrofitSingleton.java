@@ -19,10 +19,6 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 
-/**
- * Created by zk on 2015/12/16.
- * update by hugo thanks for brucezz
- */
 public class RetrofitSingleton {
 
     private static APIService apiService = null;
@@ -46,14 +42,45 @@ public class RetrofitSingleton {
 
     private static void initOkHttp() {
         // https://drakeet.me/retrofit-2-0-okhttp-3-0-config
+        //HttpLoggingInterceptor 是一个拦截器，用于输出网络请求和结果的 Log，可以配置 level 为 BASIC / HEADERS / BODY，都很好理解，
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .retryOnConnectionFailure(true)
                 .connectTimeout(15, TimeUnit.SECONDS)
+//                .addNetworkInterceptor(mTokenInterceptor)
+//                .authenticator(mAuthenticator)
                 .build();
     }
+
+//    addNetworkInterceptor 让所有网络请求都附上你的拦截器，我这里设置了一个 token 拦截器，就是在所有网络请求的 header 加上 token 参数，下面会稍微讲一下这个内容。
+//    让所有网络请求都附上你的拦截器：
+//
+//    Interceptor mTokenInterceptor = new Interceptor() {
+//        @Override public Response intercept(Chain chain) throws IOException {
+//            Request originalRequest = chain.request();
+//            if (Your.sToken == null || alreadyHasAuthorizationHeader(originalRequest)) {
+//                return chain.proceed(originalRequest);
+//            }
+//            Request authorised = originalRequest.newBuilder()
+//                    .header("Authorization", Your.sToken)
+//                    .build();
+//            return chain.proceed(authorised);
+//        }
+//    };
+
+    //如果你需要在遇到诸如 401 Not Authorised 的时候进行刷新 token，可以使用 Authenticator，这是一个专门设计用于当验证出现错误的时候，进行询问获取处理的拦截器：
+//    Authenticator mAuthenticator = new Authenticator() {
+//        @Override public Request authenticate(Route route, Response response)
+//                throws IOException {
+//            Your.sToken = service.refreshToken();
+//            return response.request().newBuilder()
+//                    .addHeader("Authorization", newAccessToken)
+//                    .build();
+//        }
+//    }
+
 
     private static void initRetrofit() {
         retrofit = new Retrofit.Builder()
@@ -85,7 +112,6 @@ public class RetrofitSingleton {
 //                })
 //                .map(weatherAPI -> weatherAPI.mHeWeatherDataService30s.get(0))
 //                .compose(RxUtils.rxSchedulerHelper());
-
         return apiService.mWeatherAPI(city, C.KEY)
                 .flatMap(weatherAPI -> {
                     if (weatherAPI.mHeWeatherDataService30s.get(0).status.equals("no more requests")) {

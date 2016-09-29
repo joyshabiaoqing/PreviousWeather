@@ -272,6 +272,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                .subscribe(observer)
 //        );
         compositeSubscription.add(
+                //添加订阅者到compositeSubscription中，方便compositeSubscription处理所有订阅者
                 Observable.concat(fetchDataByNetWork(), fetchDataByCache())
                         .first(weather -> weather != null)
                         .doOnError(throwable -> {
@@ -286,6 +287,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             mRefreshLayout.setRefreshing(false);
                             mProgressBar.setVisibility(View.GONE);
                         })
+                        //订阅者去订阅这个observer,之后可以接收到因observer发现事物改变而发出的通知
                         .subscribe(observer)
         );
     }
@@ -294,7 +296,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 从网络获取
      */
     private Observable<Weather> fetchDataByNetWork() {
+        Log.e("city name", mSetting.getCityName());
         String cityName = Util.replaceCity(mSetting.getCityName());
+        Log.e("safe city name", cityName);
         return RetrofitSingleton.getInstance()
                 .fetchWeather(cityName)
                 .onErrorReturn(throwable -> {
@@ -320,9 +324,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 拿到数据后的操作
      */
     private void initDataObserver() {
+
         observer = new Observer<Weather>() {
             @Override
             public void onCompleted() {
+                Log.e("observer", "onCompleted");
             }
 
             @Override
@@ -341,7 +347,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                    aCache.put(C.WEATHER_CACHE, weather,
 //                            (mSetting.getAutoUpdate() * Setting.ONE_HOUR));//默认3小时后缓存失效
 //                }
-                Log.e("c", "c");
+                Log.e("observer", "onNext");
                 mWeather.status = weather.status;
                 mWeather.aqi = weather.aqi;
                 mWeather.basic = weather.basic;
@@ -354,7 +360,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 //mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
                 normalStyleNotification(mWeather);
-//                showSnackbar(fab, "加载完毕，✺◟(∗❛ัᴗ❛ั∗)◞✺,");
+                showSnackbar(fab, "加载完毕，✺◟(∗❛ัᴗ❛ั∗)◞✺,");
             }
         };
     }
@@ -417,7 +423,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     /**
      * 高德定位
      */
-        //初始化定位
+    //初始化定位
     private void location() {
         mLocationClient = new AMapLocationClient(getApplicationContext());
         //设置定位回调监听
