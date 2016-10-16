@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda' //加上这句加,入plugin声明
+apply plugin: 'com.dodola.rocoofix'
 
 android {
     compileSdkVersion 23
@@ -38,7 +39,12 @@ android {
 //    }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        //不添加这句，debug不能生成rocoofix文件
+        debug {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -47,6 +53,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+}
+
+rocoo_fix {
+    includePackage = ['com/biao/previousweather']//指定将来可能需要制作补丁的package(就是指定插庄的范围)
+    excludeClass = ['BaseApplication.class']//将不需要加到patch里的类写在这里(不需要插庄的类)
+
+    preVersionPath = '1'//注意：此项属性只在需要制作补丁的时候才需开启！！如果不需要制作补丁则需要去掉此项
+
+    enable = true//注意：关掉此项会无法生成Hash.txt文件
+    //打开这个才可以插桩成功
+    scanref = true//默认为 false，开启这个选项会将与补丁 class 相引用的 class 都打入包中来解决 ART 虚拟机崩溃问题，功能 Beta 中
 }
 
 
@@ -79,4 +96,7 @@ dependencies {
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     //高德定位
     compile files('libs/AMap_Location_v2.3.0_20160112.jar')
+
+    compile 'com.dodola:rocoo:1.1'
+//    compile project(':rocoo')
 }
