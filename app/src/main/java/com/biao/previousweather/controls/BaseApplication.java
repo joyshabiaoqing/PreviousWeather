@@ -6,7 +6,6 @@ import android.content.res.AssetManager;
 import android.os.Environment;
 
 import com.biao.previousweather.controls.component.RetrofitSingleton;
-import com.dodola.rocoofix.RocooFix;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -65,7 +64,7 @@ public class BaseApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        RocooFix.init(this);
+//        RocooFix.init(this);
 
 //        File dexDir = new File(this.getFilesDir(), "hotfix");
 //        dexDir.mkdir();
@@ -81,7 +80,7 @@ public class BaseApplication extends Application {
 //                Log.e("==>",dexPath);
 //            }
 //        }
-        RocooFix.initPathFromAssets(this, "patch.jar");
+//        RocooFix.initPathFromAssets(this, "patch.jar");
 //        RocooFix.applyPatch(this, patchPath + "/patch.jar");
     }
 

@@ -39,12 +39,12 @@ android {
 //    }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         //不添加这句，debug不能生成rocoofix文件
         debug {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -97,6 +97,6 @@ dependencies {
     //高德定位
     compile files('libs/AMap_Location_v2.3.0_20160112.jar')
 
-    compile 'com.dodola:rocoo:1.1'
+//    compile 'com.dodola:rocoo:1.1'
 //    compile project(':rocoo')
 }

@@ -26,7 +26,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -38,17 +37,11 @@ import com.biao.previousweather.controls.component.RetrofitSingleton;
 import com.biao.previousweather.controls.listener.HidingScrollListener;
 import com.biao.previousweather.controls.utils.PLog;
 import com.biao.previousweather.controls.utils.Util;
-import com.biao.previousweather.modules.BugClass;
 import com.biao.previousweather.modules.Setting;
 import com.biao.previousweather.modules.Weather;
-import com.dodola.rocoofix.RocooFix;
-
-import java.io.File;
 
 import rx.Observable;
 import rx.Observer;
-
-import static com.biao.previousweather.controls.BaseApplication.patchPath;
 
 /**
  * Created by Administrator on 2016/8/2.
@@ -199,18 +192,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             fab.setOnClickListener(v -> {
 //                showSnackbar(collapsingToolbarLayout, "hello world");
 //                File file = new File(patchPath);
-                Log.e("==>", "热修复！！！,动态改变状态栏颜色！！");
-                Toast.makeText(MainActivity.this, "热修复！！！,动态改变状态栏颜色！！", Toast.LENGTH_LONG);
-                String s = patchPath + "/patch.jar";
-                File file = new File(s);
-                Log.e("==>", file.getAbsolutePath());
-                if (file.exists()) {
-                    Log.e("==>", file.getAbsolutePath());
-                    RocooFix.applyPatchRuntime(BaseApplication.getmAppContext(), patchPath + "/patch.jar");
-                }
-//                RocooFix.initPathFromAssetsRuntime(BaseApplication.getmAppContext(),"patch.jar");
-                BugClass bugClass = new BugClass();
-                collapsingToolbarLayout.setTitle(bugClass.show());
+//                Log.e("==>", "热修复！！！,动态改变状态栏颜色！！");
+//                Toast.makeText(MainActivity.this, "热修复！！！,动态改变状态栏颜色！！", Toast.LENGTH_LONG);
+//                String s = patchPath + "/patch.jar";
+//                File file = new File(s);
+//                Log.e("==>", file.getAbsolutePath());
+//                if (file.exists()) {
+//                    Log.e("==>", file.getAbsolutePath());
+//                    RocooFix.applyPatchRuntime(BaseApplication.getmAppContext(), patchPath + "/patch.jar");
+//                }
+////                RocooFix.initPathFromAssetsRuntime(BaseApplication.getmAppContext(),"patch.jar");
+//                BugClass bugClass = new BugClass();
+//                collapsingToolbarLayout.setTitle(bugClass.show());
             });
 
             mRecyclerView.addOnScrollListener(new HidingScrollListener() {
@@ -375,9 +368,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 mWeather.now = weather.now;
                 mWeather.dailyForecast = weather.dailyForecast;
                 mWeather.hourlyForecast = weather.hourlyForecast;
-//                collapsingToolbarLayout.setTitle(mWeather.basic.city);
-                BugClass bugClass = new BugClass();
-                collapsingToolbarLayout.setTitle(bugClass.show());
+                collapsingToolbarLayout.setTitle(mWeather.basic.city);
+////                BugClass bugClass = new BugClass();
+//                collapsingToolbarLayout.setTitle(bugClass.show());
                 //mAdapter = new WeatherAdapter(MainActivity.this, weather);
                 //mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
