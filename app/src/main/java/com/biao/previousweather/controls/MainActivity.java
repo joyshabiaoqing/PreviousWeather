@@ -126,7 +126,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             headerBackground = (RelativeLayout) headerLayout.findViewById(R.id.header_background);
             drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
-                    R.string.navigation_drawer_close);
+                    R.string.navigation_drawer_close){
+                @Override
+                public void onDrawerSlide(View drawerView, float slideOffset) {
+                    super.onDrawerSlide(drawerView, slideOffset);
+                    Log.e("===>",slideOffset+"");
+//                    navigationView.setAlpha();
+                }
+            };
             drawer.addDrawerListener(toggle);
             toggle.syncState();
         }
@@ -286,7 +293,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //        );
         compositeSubscription.add(
                 //添加订阅者到compositeSubscription中，方便compositeSubscription处理所有订阅者
-                Observable.concat(fetchDataByNetWork(), fetchDataByCache())
+                Observable.concat(fetchDataByNetWork(), fetchDataByCache())//contact 依次发送observable
                         .first(weather -> weather != null)
                         .doOnError(throwable -> {
                             mErroImageView.setVisibility(View.VISIBLE);
@@ -303,6 +310,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         //订阅者去订阅这个observer,之后可以接收到因observer发现事物改变而发出的通知
                         .subscribe(observer)
         );
+
+
+
+
     }
 
     /**
